@@ -1,5 +1,6 @@
 // src/app/layout.tsx
 import './globals.css'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata = {
   title: 'My Personal Site',
@@ -21,6 +22,7 @@ export default function RootLayout({
           </nav>
         </header>
         {children}
+        <Analytics />
       </body>
     </html>
   )
