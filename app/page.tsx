@@ -4,15 +4,15 @@ export default function Home() {
       {/* Hero */}
       <section className="mb-20">
         <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
-          Mills M
+          Mills McIlroy
         </h1>
         <p className="mt-2 text-lg text-[var(--muted)]">
           Full-Stack Software Engineer
         </p>
         <p className="mt-6 text-lg leading-relaxed">
-          I design and build production-grade web applications with React,
-          TypeScript, and Node.js, with a focus on reliability, performance, and
-          maintainable architecture.
+          I design and build production-grade software with TypeScript, Rust,
+          and React, with a focus on reliability, performance, and maintainable
+          architecture.
         </p>
         <div className="mt-8 flex gap-4">
           <a
@@ -39,8 +39,8 @@ export default function Home() {
           <p>
             I am a full-stack software engineer with experience building modern
             web applications across frontend, backend, and infrastructure
-            layers. My work focuses on TypeScript-based systems, including React
-            and Next.js frontends paired with Node.js APIs and relational
+            layers. My work spans TypeScript and Rust, including React and
+            Next.js frontends paired with backend services and relational
             databases.
           </p>
           <p>
@@ -121,7 +121,7 @@ export default function Home() {
           />
           <SkillCategory
             title="Backend"
-            skills="Node.js, REST APIs, PostgreSQL, Redis"
+            skills="Rust, Node.js, REST APIs, PostgreSQL, Redis"
           />
           <SkillCategory
             title="Web3"

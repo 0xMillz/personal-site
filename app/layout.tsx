@@ -2,7 +2,7 @@ import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 
 export const metadata = {
-  title: 'Mills M — Full-Stack Software Engineer',
+  title: 'Mills McIlroy — Full-Stack Software Engineer',
   description:
     'I design and build production-grade web applications with React, TypeScript, and Node.js.',
 }
@@ -30,7 +30,7 @@ export default function RootLayout({
         <nav className="mx-auto max-w-2xl px-6 pt-8">
           <div className="flex items-center justify-between text-sm">
             <a href="/" className="font-medium hover:text-[var(--accent)]">
-              Mills M
+              Mills McIlroy
             </a>
             <div className="flex gap-6 text-[var(--muted)]">
               <a href="#projects" className="hover:text-[var(--foreground)]">
@@ -50,7 +50,7 @@ export default function RootLayout({
         </nav>
         {children}
         <footer className="mx-auto max-w-2xl px-6 py-12 text-center text-sm text-[var(--muted)]">
-          © {new Date().getFullYear()} Mills M
+          © {new Date().getFullYear()} Mills McIlroy
         </footer>
         <Analytics />
       </body>
