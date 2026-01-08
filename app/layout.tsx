@@ -1,10 +1,10 @@
-// src/app/layout.tsx
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 
 export const metadata = {
-  title: 'My Personal Site',
-  description: 'Personal website and technical blog',
+  title: 'Mills M — Full-Stack Software Engineer',
+  description:
+    'I design and build production-grade web applications with React, TypeScript, and Node.js.',
 }
 
 export default function RootLayout({
@@ -14,14 +14,44 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-white text-gray-900">
-        <header className="mx-auto max-w-3xl p-8">
-          <nav className="flex gap-4">
-            <a href="/">Home</a>
-            <a href="/blog">Blog</a>
-          </nav>
-        </header>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>
+        <nav className="mx-auto max-w-2xl px-6 pt-8">
+          <div className="flex items-center justify-between text-sm">
+            <a href="/" className="font-medium hover:text-[var(--accent)]">
+              Mills M
+            </a>
+            <div className="flex gap-6 text-[var(--muted)]">
+              <a href="#projects" className="hover:text-[var(--foreground)]">
+                Projects
+              </a>
+              <a href="#about" className="hover:text-[var(--foreground)]">
+                About
+              </a>
+              <a href="/blog" className="hover:text-[var(--foreground)]">
+                Blog
+              </a>
+              <a href="#contact" className="hover:text-[var(--foreground)]">
+                Contact
+              </a>
+            </div>
+          </div>
+        </nav>
         {children}
+        <footer className="mx-auto max-w-2xl px-6 py-12 text-center text-sm text-[var(--muted)]">
+          © {new Date().getFullYear()} Mills M
+        </footer>
         <Analytics />
       </body>
     </html>

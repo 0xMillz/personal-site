@@ -6,3 +6,4 @@ export default function BlogLayout({
   return <main className="mx-auto max-w-3xl p-8">{children}</main>
 }
 
+
