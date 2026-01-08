@@ -33,16 +33,16 @@ export default function RootLayout({
               Mills McIlroy
             </a>
             <div className="flex gap-6 text-[var(--muted)]">
-              <a href="#projects" className="hover:text-[var(--foreground)]">
+              <a href="/#projects" className="hover:text-[var(--foreground)]">
                 Projects
               </a>
-              <a href="#about" className="hover:text-[var(--foreground)]">
+              <a href="/#about" className="hover:text-[var(--foreground)]">
                 About
               </a>
               <a href="/blog" className="hover:text-[var(--foreground)]">
                 Blog
               </a>
-              <a href="#contact" className="hover:text-[var(--foreground)]">
+              <a href="/#contact" className="hover:text-[var(--foreground)]">
                 Contact
               </a>
             </div>
