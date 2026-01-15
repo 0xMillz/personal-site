@@ -3,7 +3,7 @@ import Link from 'next/link'
 const posts = [
   {
     slug: 'solang-foundry-evm-rust',
-    title: 'Write and Deploy an EVM Smart Contract in Rust Using Solang + Foundry',
+    title: 'Write and Deploy an EVM Smart Contract using Solang + Foundry',
     date: 'January 2026',
     description:
       'A practical guide to using Solang, a Rust-based Solidity compiler, with Foundry for EVM smart contract development.',

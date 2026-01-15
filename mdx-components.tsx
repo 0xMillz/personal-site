@@ -7,6 +7,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </article>
     ),
+    h1: ({ children }) => (
+      <h1 className="text-3xl font-semibold tracking-tight">{children}</h1>
+    ),
     ...components,
   }
 }
