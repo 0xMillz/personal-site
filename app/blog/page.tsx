@@ -40,7 +40,7 @@ const posts = [
 export default function BlogIndex() {
   return (
     <main className="mx-auto max-w-2xl px-6 py-12 md:py-20">
-      <h1 className="text-3xl font-semibold tracking-tight">Blog</h1>
+      <h1 className="text-3xl font-semibold tracking-tight">Articles</h1>
       <p className="mt-3 text-[var(--muted)]">
         Technical writing on software engineering, web3, and systems.
       </p>

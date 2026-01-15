@@ -45,7 +45,7 @@ export default function BlogPostLayout({
         className="group mb-8 inline-flex items-center gap-2 text-sm text-[var(--muted)] transition hover:text-[var(--foreground)]"
       >
         <span className="transition group-hover:-translate-x-1">←</span>
-        Back to blog
+        Back to articles
       </Link>
       {children}
     </main>
