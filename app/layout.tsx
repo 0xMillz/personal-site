@@ -1,10 +1,30 @@
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
+import { Metadata } from 'next'
 
-export const metadata = {
-  title: 'Mills McIlroy',
+export const metadata: Metadata = {
+  metadataBase: new URL('https://millsmcilroy.com'),
+  title: {
+    default: 'Mills McIlroy — Full-Stack Software Engineer',
+    template: '%s — Mills McIlroy',
+  },
   description:
     'I design and build production-grade web applications with React, TypeScript, and Node.js.',
+  authors: [{ name: 'Mills McIlroy' }],
+  creator: 'Mills McIlroy',
+  openGraph: {
+    siteName: 'Mills McIlroy',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@0xMillz',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export default function RootLayout({

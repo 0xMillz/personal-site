@@ -1,3 +1,34 @@
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Mills McIlroy — Full-Stack Software Engineer',
+  description:
+    'I design and build production-grade software with TypeScript, Rust, and React, with a focus on reliability, performance, and maintainable architecture.',
+  keywords: [
+    'software engineer',
+    'full-stack developer',
+    'TypeScript',
+    'Rust',
+    'React',
+    'Next.js',
+    'web3',
+    'blockchain',
+  ],
+  openGraph: {
+    title: 'Mills McIlroy — Full-Stack Software Engineer',
+    description:
+      'I design and build production-grade software with TypeScript, Rust, and React, with a focus on reliability, performance, and maintainable architecture.',
+    type: 'website',
+    url: 'https://millsmcilroy.com',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mills McIlroy — Full-Stack Software Engineer',
+    description:
+      'I design and build production-grade software with TypeScript, Rust, and React.',
+  },
+}
+
 export default function Home() {
   return (
     <main className="mx-auto max-w-2xl px-6 py-16 md:py-24">

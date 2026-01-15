@@ -1,4 +1,31 @@
 import Link from 'next/link'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Blog — Mills McIlroy',
+  description:
+    'Technical writing on software engineering, web3, and systems design.',
+  keywords: [
+    'software engineering blog',
+    'web3',
+    'blockchain',
+    'TypeScript',
+    'Rust',
+    'systems design',
+  ],
+  openGraph: {
+    title: 'Blog — Mills McIlroy',
+    description:
+      'Technical writing on software engineering, web3, and systems design.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Blog — Mills McIlroy',
+    description:
+      'Technical writing on software engineering, web3, and systems design.',
+  },
+}
 
 const posts = [
   {
