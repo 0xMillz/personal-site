@@ -1,12 +1,12 @@
-# Write and Deploy an EVM Smart Contract using Solang + Foundry
+# Write and Deploy an EVM Smart Contract using Solang + Foundry  
 
 *January 2026*
 
-Solang is a **Solidity compiler written in Rust** that can produce **EVM-compatible bytecode**. Unlike the standard `solc` compiler, Solang is designed as a multi‑target compiler and can emit bytecode for **EVM**, **Solana (BPF)**, and **Substrate contracts**. In this tutorial, we focus **exclusively on the EVM path** and treat Solang as a first‑class compiler, not a drop‑in replacement for `solc`.
-
+Solang is a **Solidity compiler written in Rust** that can produce **EVM-compatible bytecode**. Unlike the standard `solc` compiler, Solang is designed as a multi‑target compiler and can emit bytecode for **EVM**, **Solana (BPF)**, and **Substrate contracts**. In this tutorial, we focus **exclusively on the EVM path** and treat Solang as a first‑class compiler, not a drop‑in replacement for `solc`.  
+<br />
 > **Important scope note**  
-> This guide uses Solang to *compile* Solidity and uses Foundry tooling only for **node simulation (`anvil`) and RPC interaction (`cast`)**. We do **not** use Foundry to compile contracts. This guarantees that the deployed bytecode is genuinely produced by Solang.
-
+> This guide uses Solang to *compile* Solidity and uses Foundry tooling only for **node simulation (`anvil`) and RPC interaction (`cast`)**. We do **not** use Foundry to compile contracts. This guarantees that the deployed bytecode is genuinely produced by Solang.  
+<br />
 By the end, you will:
 - Write a minimal ERC‑20–style token in Solidity
 - Compile it to EVM bytecode using **Solang**
