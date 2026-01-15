@@ -1,0 +1,265 @@
+# Write and Deploy an EVM Smart Contract using Solang + Foundry
+
+*January 2026*
+
+Solang is a **Solidity compiler written in Rust** that can produce **EVM-compatible bytecode**. Unlike the standard `solc` compiler, Solang is designed as a multi‑target compiler and can emit bytecode for **EVM**, **Solana (BPF)**, and **Substrate contracts**. In this tutorial, we focus **exclusively on the EVM path** and treat Solang as a first‑class compiler, not a drop‑in replacement for `solc`.
+
+> **Important scope note**  
+> This guide uses Solang to *compile* Solidity and uses Foundry tooling only for **node simulation (`anvil`) and RPC interaction (`cast`)**. We do **not** use Foundry to compile contracts. This guarantees that the deployed bytecode is genuinely produced by Solang.
+
+By the end, you will:
+- Write a minimal ERC‑20–style token in Solidity
+- Compile it to EVM bytecode using **Solang**
+- Deploy the compiled bytecode using **cast**
+- Interact with the contract locally on Anvil
+- Understand the trade‑offs vs a standard `solc` workflow
+
+---
+
+## Prerequisites
+
+- Rust 1.70+
+- Foundry (`anvil`, `cast`)
+- Solang
+
+### Install Foundry
+
+```bash
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
+```
+
+### Install Solang
+
+```bash
+cargo install solang
+```
+
+Or download a prebuilt binary from the Solang releases page.
+
+Verify the installation:
+
+```bash
+solang --version
+```
+
+---
+
+## Project Setup
+
+Create a clean workspace:
+
+```bash
+mkdir solang-erc20 && cd solang-erc20
+mkdir src out
+```
+
+This tutorial intentionally avoids `forge init` to prevent accidental `solc` compilation.
+
+---
+
+## Write the Contract
+
+Create `src/Token.sol`:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Token {
+    string public name;
+    string public symbol;
+    uint8 public constant decimals = 18;
+    uint256 public totalSupply;
+
+    mapping(address => uint256) public balanceOf;
+    mapping(address => mapping(address => uint256)) public allowance;
+
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+
+    constructor(string memory _name, string memory _symbol, uint256 _initialSupply) {
+        name = _name;
+        symbol = _symbol;
+        totalSupply = _initialSupply * 10 ** decimals;
+        balanceOf[msg.sender] = totalSupply;
+        emit Transfer(address(0), msg.sender, totalSupply);
+    }
+
+    function transfer(address to, uint256 amount) public returns (bool) {
+        require(balanceOf[msg.sender] >= amount, "Insufficient balance");
+        balanceOf[msg.sender] -= amount;
+        balanceOf[to] += amount;
+        emit Transfer(msg.sender, to, amount);
+        return true;
+    }
+
+    function approve(address spender, uint256 amount) public returns (bool) {
+        allowance[msg.sender][spender] = amount;
+        emit Approval(msg.sender, spender, amount);
+        return true;
+    }
+
+    function transferFrom(address from, address to, uint256 amount) public returns (bool) {
+        require(balanceOf[from] >= amount, "Insufficient balance");
+        require(allowance[from][msg.sender] >= amount, "Insufficient allowance");
+        allowance[from][msg.sender] -= amount;
+        balanceOf[from] -= amount;
+        balanceOf[to] += amount;
+        emit Transfer(from, to, amount);
+        return true;
+    }
+}
+```
+
+This contract is standard Solidity and compatible with Solang’s EVM backend.
+
+---
+
+## Compile with Solang (EVM Target)
+
+Compile using Solang:
+
+```bash
+solang compile src/Token.sol --target evm -o out
+```
+
+Solang produces a JSON artifact containing:
+- ABI
+- EVM bytecode
+- Metadata
+
+Inspect it:
+
+```bash
+ls out
+```
+
+You should see `Token.json`.
+
+---
+
+## Start a Local EVM Node
+
+In a separate terminal:
+
+```bash
+anvil
+```
+
+Use the first default account:
+
+```text
+Address:     0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+Private Key: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+```
+
+---
+
+## Deploy Solang‑Compiled Bytecode
+
+Extract the bytecode from Solang’s artifact:
+
+```bash
+BYTECODE=$(jq -r '.contracts.Token.evm.bytecode.object' out/Token.json)
+```
+
+ABI‑encode constructor arguments:
+
+```bash
+ARGS=$(cast abi-encode "constructor(string,string,uint256)" "Solang Token" "SLNG" 1000000)
+```
+
+Deploy using `cast send --create`:
+
+```bash
+cast send \
+  --create ${BYTECODE}${ARGS#0x} \
+  --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 \
+  --rpc-url http://localhost:8545
+```
+
+Export the deployed address:
+
+```bash
+export TOKEN=0xYourDeployedAddress
+```
+
+> This step ensures the deployed contract bytecode is **exactly what Solang produced**, with no `solc` involvement.
+
+---
+
+## Interact with the Contract
+
+```bash
+export DEPLOYER=0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+export ALICE=0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+export RPC=http://localhost:8545
+```
+
+### Metadata
+
+```bash
+cast call $TOKEN "name()" --rpc-url $RPC | cast --to-ascii
+cast call $TOKEN "symbol()" --rpc-url $RPC | cast --to-ascii
+cast call $TOKEN "decimals()" --rpc-url $RPC
+```
+
+### Balances
+
+```bash
+cast call $TOKEN "balanceOf(address)" $DEPLOYER --rpc-url $RPC
+```
+
+### Transfer
+
+```bash
+cast send $TOKEN "transfer(address,uint256)" $ALICE 1000000000000000000000 \
+  --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 \
+  --rpc-url $RPC
+```
+
+---
+
+## Notes on Testing with Foundry
+
+Foundry’s `forge test` **always recompiles contracts using `solc`**. As a result:
+
+- Forge tests validate Solidity logic
+- They do **not** validate Solang‑emitted bytecode
+
+For true Solang validation, you must:
+- Deploy Solang‑compiled bytecode
+- Test behavior via RPC calls or custom harnesses
+
+This distinction is critical in production environments.
+
+---
+
+## Why Use Solang?
+
+### Advantages
+
+- Rust‑based compiler architecture
+- Multi‑target output (EVM, Solana, Substrate)
+- Useful diagnostics and stricter checks
+- Easier embedding in Rust pipelines
+
+### Trade‑offs
+
+- Smaller ecosystem than `solc`
+- Not fully compatible with Etherscan auto‑verification
+- Some Solidity edge cases differ
+
+---
+
+## Next Steps
+
+- Add mint and burn functionality with access control
+- Compare gas output vs `solc`
+- Try compiling the same contract for Solana
+- Integrate Solang into a Rust‑based deployment tool
+
+---
+
+Solang demonstrates that Solidity does not need to be tied to a single compiler or ecosystem. If you work in Rust or care about multi‑chain compilation, it is a powerful and underexplored tool.
