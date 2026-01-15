@@ -2,7 +2,7 @@ import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 
 export const metadata = {
-  title: 'Mills McIlroy — Full-Stack Software Engineer',
+  title: 'Mills McIlroy',
   description:
     'I design and build production-grade web applications with React, TypeScript, and Node.js.',
 }
