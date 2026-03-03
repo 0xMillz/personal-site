@@ -59,9 +59,6 @@ export default function RootLayout({
               <a href="/#about" className="hover:text-[var(--foreground)]">
                 About
               </a>
-              <a href="/blog" className="hover:text-[var(--foreground)]">
-                Blog
-              </a>
               <a href="/#contact" className="hover:text-[var(--foreground)]">
                 Contact
               </a>
