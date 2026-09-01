@@ -61,6 +61,9 @@ export default function Home() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-16 md:py-24">
       <section className="mb-20">
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed">
+          DISCLAIMER: Below is AI-generated content. TODO: update with real content. This is a placeholder for now.
+        </p>
         <p className="font-mono text-sm text-[var(--accent)]">
           Full stack · platforms · AI agents
         </p>
